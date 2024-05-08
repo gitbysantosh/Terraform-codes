@@ -1,0 +1,61 @@
+provider "aws" {
+  region = "us-east-1"  
+}
+
+
+resource "aws_instance" "windows_instance" {
+  ami           = "ami-07caf09b362be10b8"  
+  instance_type = "t2.micro"            
+
+  # Tags
+  tags = {
+    Name = "WindowsInstance"
+  }
+}
+
+resource "aws_security_group" "instance_sg" {
+  name        = "instance_sg"
+  description = "Allow RDP and ICMP traffic"
+
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+---------------------------------------------------------
+provider "aws" {
+region = "us-east-1"
+}
+
+resource "aws_instance" "santosh" {
+ami = "ami-04ff98ccbfa41c9ad"
+instance_type = "t2.micro"
+tags = {
+Name = "santosh-terraserver"
+}
+}
+
+resource "aws_s3_bucket" "abc" {
+bucket = "santosh887766bucket1"
+}
+resource "aws_vpc" "one" {
+  cidr_block = "10.0.0.0/24"
+  tags = {
+    Name = "vpc"
+  }
+}
